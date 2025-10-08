@@ -109,7 +109,7 @@ Node* reverse(Node* head) {
     }
     head = prev;
     display(head);
-    return head;
+    return head;  
 }
 
 int main ()
