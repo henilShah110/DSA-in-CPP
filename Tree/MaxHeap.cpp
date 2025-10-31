@@ -8,37 +8,39 @@ void insert(int n){
     heap.push_back(n);
     int i = heap.size()-1;
     int temp;
-    while(heap[i]>heap[i/2]){
+    while(i>0 && heap[i]>heap[(i-1)/2]){
         temp = heap[i];
-        heap[i]=heap[i/2];
-        heap[i/2] = temp;
-        i/=2;
+        heap[i]=heap[(i-1)/2];
+        heap[(i-1)/2] = temp;
+        i=(i-1)/2;
     }
 }
 
 int deleteEl(){ //can only delete first element(greatest)
+    if(heap.size()==0) return -1;
     int x = heap[0];
     heap[0]=heap[heap.size()-1];
     heap.pop_back();
     int temp;
 
-    int i = 1; //all indices to be used with -1
-    while(2*i<=heap.size()-1){
-        if(heap[2*i-1]>heap[2*i] && heap[2*i-1]>heap[i-1]){
-            temp = heap[i-1];
-            heap[i-1]=heap[2*i-1];
-            heap[2*i-1]=temp;
-            i = 2*i;
+    int i = 0;
+    int left,right,largest;
+
+    while(true){
+        left = 2*i+1;
+        right = 2*i+2;
+        largest = i;
+
+        if(left < heap.size() && heap[left] > heap[largest]) largest = left;
+        if(right < heap.size() && heap[right] > heap[largest]) largest = right;
+
+        if(largest != i){
+            temp = heap[i];
+            heap[i] = heap[largest];
+            heap[largest] = temp;
+            i = largest;
         }
-        else if(heap[2*i-1]<=heap[2*i] && heap[2*i]>heap[i-1]){
-            temp = heap[i-1];
-            heap[i-1]=heap[2*i];
-            heap[2*i]=temp;
-            i = 2*i+1;
-        }
-        else{
-            break;
-        }
+        else break;
     }
     return x;
 }
@@ -65,5 +67,4 @@ int main(){
     cout << deleteEl() << " ";
     cout << deleteEl() << " ";
     cout << deleteEl() << " ";
-
 }
