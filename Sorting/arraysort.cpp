@@ -1,5 +1,5 @@
 #include <iostream>
-using namespace std
+using namespace std;
 
 void display(int arr[]){
     for(int i = 0 ; i < 10 ; i++){
